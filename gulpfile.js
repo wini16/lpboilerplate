@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const watch = require('gulp-watch');
 const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
@@ -16,21 +17,21 @@ const imagemin = require('gulp-imagemin');
 const development = environments.development;
 const production = environments.production;
 
-gulp.task('pages', function () {
-    const options = {
-      batch : ['./src/templates/partials']
-    }
-
-		return gulp.src('src/templates/pages/*.@(html|hbs)')
-			.pipe(handlebars(null, options))
-			.pipe(production(htmlmin({collapseWhitespace: true})))
-			.pipe(gulp.dest('./dist/'));
-});
+function pages() {
+	const options = {
+		batch : ['./src/templates/partials']
+	}
+	return gulp.src('src/templates/pages/*.@(html|hbs)')
+		.pipe(handlebars(null, options))
+		.pipe(production(htmlmin({collapseWhitespace: true})))
+		.pipe(gulp.dest('./dist/'));
+}
+gulp.task('pages', pages);
 gulp.task('pages:watch', function () {
-  gulp.watch('./src/templates/**/*', ['pages']);
+	watch('./src/templates/**/*', pages);
 });
 
-gulp.task('styles', function () {
+function styles() {
 	return gulp.src('./src/styles/main.scss')
 		.pipe(sourcemaps.init())
 		.pipe(sass({
@@ -42,18 +43,20 @@ gulp.task('styles', function () {
 		}))
 		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest('./dist/static'));
-});
+}
+gulp.task('styles', styles);
 gulp.task('styles:watch', function () {
-  gulp.watch('./src/styles/**/*.scss', ['styles']);
+  watch('./src/styles/**/*.scss', styles);
 });
 
-gulp.task('images', () =>
-    gulp.src('src/asstes/img/*')
-			.pipe(imagemin())
-			.pipe(gulp.dest('dist/static/img'))
-);
+function images() {
+  return gulp.src('src/assets/img/*')
+		.pipe(imagemin())
+		.pipe(gulp.dest('dist/static/img'))
+}
+gulp.task('images', images);
 gulp.task('images:watch', function () {
-  gulp.watch('./src/assets/img/*', ['images']);
+  watch('./src/assets/img/*', images);
 });
 
 gulp.task("webpack:build", function(callback) {
@@ -111,6 +114,4 @@ gulp.task('default', ['styles', 'styles:watch', 'pages', 'pages:watch', 'images'
 	});
 });
 
-gulp.task('build', ['pages', 'styles', 'images', 'webpack:build'], function(callback) {
-	callback();
-});
+gulp.task('build', ['pages', 'styles', 'images', 'webpack:build']);
