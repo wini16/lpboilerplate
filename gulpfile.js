@@ -81,7 +81,7 @@ gulp.task("webpack:build", function(callback) {
 	});
 });
 
-gulp.task('default', ['styles:watch', 'pages:watch', 'images:watch'], function() {
+gulp.task('default', ['styles', 'styles:watch', 'pages', 'pages:watch', 'images', 'images:watch'], function() {
 	const bundler = webpack(webpackConfig);
 	bundler.plugin('done', function (stats) {
     if (stats.hasErrors() || stats.hasWarnings()) {
