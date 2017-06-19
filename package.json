@@ -28,8 +28,7 @@
     "gulp-util": "3.0.8",
     "gulp-watch": "4.3.11",
     "rimraf": "2.6.1",
-    "webpack": "2.6.1",
-    "webpack-md5-hash": "0.0.5"
+    "webpack": "2.6.1"
   },
   "dependencies": {}
 }

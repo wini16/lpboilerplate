@@ -1,5 +1,4 @@
 const webpack = require("webpack");
-const WebpackMd5Hash = require('webpack-md5-hash');
 
 exports = module.exports = {
   devtool: 'source-map',
