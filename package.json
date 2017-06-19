@@ -16,21 +16,20 @@
     "babel-loader": "7.0.0",
     "babel-preset-env": "1.5.2",
     "browser-sync": "2.18.12",
-    "gulp": "^3.9.1",
+    "eslint": "4.0.0",
+    "gulp": "3.9.1",
     "gulp-autoprefixer": "4.0.0",
-    "gulp-compile-handlebars": "^0.6.1",
+    "gulp-compile-handlebars": "0.6.1",
     "gulp-environments": "0.1.2",
     "gulp-htmlmin": "3.0.0",
     "gulp-imagemin": "3.3.0",
-    "gulp-sass": "^3.1.0",
-    "gulp-sourcemaps": "^2.6.0",
+    "gulp-sass": "3.1.0",
+    "gulp-sourcemaps": "2.6.0",
     "gulp-util": "3.0.8",
     "gulp-watch": "4.3.11",
     "rimraf": "2.6.1",
     "webpack": "2.6.1",
     "webpack-md5-hash": "0.0.5"
   },
-  "dependencies": {
-    "normalize-scss": "7.0.0"
-  }
+  "dependencies": {}
 }

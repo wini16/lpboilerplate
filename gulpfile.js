@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const watch = require('gulp-watch');
+const cache = require('gulp-cached');
 const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
@@ -21,7 +22,8 @@ function pages() {
 	const options = {
 		batch : ['./src/templates/partials']
 	}
-	return gulp.src('src/templates/pages/*.@(html|hbs)')
+  return gulp.src('src/templates/pages/*.@(html|hbs)')
+    .pipe(cache('pages'))  
 		.pipe(handlebars(null, options))
 		.pipe(production(htmlmin({collapseWhitespace: true})))
 		.pipe(gulp.dest('./dist/'));
@@ -32,7 +34,8 @@ gulp.task('pages:watch', function () {
 });
 
 function styles() {
-	return gulp.src('./src/styles/main.scss')
+  return gulp.src('./src/styles/main.scss')
+    .pipe(cache('styles'))  
 		.pipe(sourcemaps.init())
 		.pipe(sass({
 			outputStyle: production ? 'compressed' : 'expanded'
@@ -70,7 +73,11 @@ gulp.task("webpack:build", function(callback) {
 			}
 		}),
 		new webpack.optimize.UglifyJsPlugin({
-			sourceMap: true
+      sourceMap: true,
+      compress: {
+        screw_ie8: true
+      },
+      comments: false
 		})
 	);
 
