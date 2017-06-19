@@ -11,6 +11,7 @@ const webpackConfig = require('./webpack.config');
 const stripAnsi = require('strip-ansi');
 const htmlmin = require('gulp-htmlmin');
 const environments = require('gulp-environments');
+const imagemin = require('gulp-imagemin');
 
 const development = environments.development;
 const production = environments.production;
@@ -46,6 +47,15 @@ gulp.task('styles:watch', function () {
   gulp.watch('./src/styles/**/*.scss', ['styles']);
 });
 
+gulp.task('images', () =>
+    gulp.src('src/asstes/img/*')
+			.pipe(imagemin())
+			.pipe(gulp.dest('dist/static/img'))
+);
+gulp.task('images:watch', function () {
+  gulp.watch('./src/assets/img/*', ['images']);
+});
+
 gulp.task("webpack:build", function(callback) {
 	// modify some webpack config options
 	var myConfig = Object.create(webpackConfig);
@@ -71,7 +81,7 @@ gulp.task("webpack:build", function(callback) {
 	});
 });
 
-gulp.task('default', ['styles:watch', 'pages:watch'], function() {
+gulp.task('default', ['styles:watch', 'pages:watch', 'images:watch'], function() {
 	const bundler = webpack(webpackConfig);
 	bundler.plugin('done', function (stats) {
     if (stats.hasErrors() || stats.hasWarnings()) {
@@ -101,6 +111,6 @@ gulp.task('default', ['styles:watch', 'pages:watch'], function() {
 	});
 });
 
-gulp.task('build', ['pages', 'styles', 'webpack:build'], function(callback) {
+gulp.task('build', ['pages', 'styles', 'images', 'webpack:build'], function(callback) {
 	callback();
 });
