@@ -1,4 +1,4 @@
-const webpack = require("webpack");
+const webpack = require('webpack');
 
 exports = module.exports = {
   devtool: 'source-map',
@@ -14,7 +14,11 @@ exports = module.exports = {
   plugins: [],
 	module: {
 		rules: [
-			{test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      }
 		]
 	}
 };

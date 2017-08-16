@@ -5,8 +5,8 @@ const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const handlebars = require('gulp-compile-handlebars');
-const gutil = require("gulp-util");
-const webpack = require("webpack");
+const gutil = require('gulp-util');
+const webpack = require('webpack');
 const browserSync = require('browser-sync').create();
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackConfig = require('./webpack.config');
@@ -62,14 +62,14 @@ gulp.task('images:watch', function () {
   watch('./src/assets/img/*', images);
 });
 
-gulp.task("webpack:build", function(callback) {
+gulp.task('webpack:build', function(callback) {
 	// modify some webpack config options
 	var myConfig = Object.create(webpackConfig);
 	myConfig.plugins = myConfig.plugins.concat(
+    new webpack.optimize.ModuleConcatenationPlugin(),
 		new webpack.DefinePlugin({
-			"process.env": {
-				// This has effect on the react lib size
-				"NODE_ENV": JSON.stringify("production")
+			'process.env': {
+				'NODE_ENV': JSON.stringify('production')
 			}
 		}),
 		new webpack.optimize.UglifyJsPlugin({
@@ -83,8 +83,8 @@ gulp.task("webpack:build", function(callback) {
 
 	// run webpack
 	webpack(myConfig, function(err, stats) {
-		if(err) throw new gutil.PluginError("webpack:build", err);
-		gutil.log("[webpack:build]", stats.toString({
+		if(err) throw new gutil.PluginError('webpack:build', err);
+		gutil.log('[webpack:build]', stats.toString({
 			colors: true
 		}));
 		callback();
@@ -96,7 +96,7 @@ gulp.task('default', ['styles', 'styles:watch', 'pages', 'pages:watch', 'images'
 	bundler.plugin('done', function (stats) {
     if (stats.hasErrors() || stats.hasWarnings()) {
 			return browserSync.sockets.emit('fullscreen:message', {
-				title: "Webpack Error:",
+				title: 'Webpack Error:',
 				body:  stripAnsi(stats.toString()),
 				timeout: 100000
 			});

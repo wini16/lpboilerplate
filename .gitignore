@@ -5,8 +5,5 @@ node_modules
 #dist folder
 /dist*
 
-#Webstorm metadata
-.idea
-
 #VSCode metadata
 .vscode
